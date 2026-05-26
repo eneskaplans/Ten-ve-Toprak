@@ -1,0 +1,880 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Ten ve Toprak — Mehtap Baydu / Arter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper:        #F4ECDD;    /* warm cream */
+    --paper-2:      #ECE1CB;
+    --paper-deep:   #E4D7BB;
+    --ink:          #1B1816;
+    --ink-soft:     #3A332D;
+    --grey-1:       #8A7E70;
+    --grey-2:       #B5AB99;
+    --rule:         rgba(27,24,22,0.20);
+    --rule-soft:    rgba(27,24,22,0.10);
+
+    --ten:    oklch(0.78 0.07 55);   /* porcelain skin */
+    --ten-d:  oklch(0.68 0.08 55);   /* deeper variant for thin marks */
+    --toprak: oklch(0.38 0.07 55);   /* deep umber earth */
+    --toprak-d: oklch(0.30 0.06 55);
+
+    --display: "Cormorant Garamond", "Times New Roman", Georgia, serif;
+    --body:    "EB Garamond", "Cormorant Garamond", Georgia, serif;
+    --mono:    "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+    --maxw: 1320px;
+    --gutter: clamp(20px, 4.5vw, 72px);
+  }
+
+  * { box-sizing: border-box; }
+  html, body {
+    margin: 0; padding: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--body);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    font-feature-settings: "kern", "liga", "onum";
+    font-size: 18px;
+    line-height: 1.6;
+  }
+  img { display: block; max-width: 100%; height: auto; }
+  a { color: inherit; text-decoration: none; border-bottom: 1px solid var(--rule); transition: border-color .25s ease, color .25s ease; }
+  a:hover { border-color: var(--toprak); color: var(--toprak); }
+
+  /* paper grain - extremely subtle */
+  body::before {
+    content: "";
+    position: fixed; inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background-image:
+      radial-gradient(rgba(27,24,22,0.025) 1px, transparent 1px),
+      radial-gradient(rgba(27,24,22,0.018) 1px, transparent 1px);
+    background-size: 3px 3px, 7px 7px;
+    background-position: 0 0, 1.5px 1.5px;
+    opacity: 0.6;
+    mix-blend-mode: multiply;
+  }
+
+  /* ---------- Archive bar ---------- */
+  .archive {
+    position: relative; z-index: 5;
+    max-width: var(--maxw);
+    margin: 0 auto;
+    padding: 22px var(--gutter) 0;
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 24px;
+  }
+  .archive .id, .archive .nav {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--grey-1);
+  }
+  .archive .id strong {
+    color: var(--ink);
+    font-weight: 500;
+    margin-right: 14px;
+    letter-spacing: 0.24em;
+  }
+  .archive .nav { display: flex; gap: 26px; }
+  .archive .nav a { border: 0; }
+  .archive .nav a:hover { color: var(--toprak); }
+  @media (max-width: 760px) { .archive .nav { display: none; } }
+
+  /* spine — vertical archive id on left margin */
+  .spine {
+    position: fixed;
+    left: 18px;
+    top: 50%;
+    transform: translateY(-50%) rotate(-90deg);
+    transform-origin: center;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--grey-2);
+    z-index: 4;
+    pointer-events: none;
+    white-space: nowrap;
+  }
+  @media (max-width: 1100px) { .spine { display: none; } }
+
+  /* ---------- Containers ---------- */
+  main { position: relative; z-index: 2; max-width: var(--maxw); margin: 0 auto; padding: 0 var(--gutter); }
+
+  section { padding: clamp(72px, 10vw, 160px) 0; position: relative; }
+  section + section { border-top: 1px solid var(--rule-soft); }
+
+  .eyebrow {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--grey-1);
+  }
+  .eyebrow .tick { display:inline-block; width:6px; height:6px; background: var(--toprak); border-radius:0; margin-right: 12px; transform: rotate(45deg); }
+
+  /* ---------- HERO ---------- */
+  .hero { padding-top: clamp(40px, 6vw, 80px); padding-bottom: clamp(60px, 8vw, 120px); }
+  .hero-top {
+    display: flex; align-items: baseline; justify-content: space-between;
+    gap: 24px;
+    margin-bottom: clamp(40px, 6vw, 80px);
+  }
+  .hero-top .num {
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(28px, 3vw, 40px);
+    color: var(--grey-1);
+    line-height: 1;
+  }
+
+  .hero-type {
+    position: relative;
+    margin: 0;
+  }
+  .word {
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(110px, 22vw, 300px);
+    line-height: 0.84;
+    letter-spacing: -0.025em;
+    margin: 0;
+    display: block;
+  }
+  .word.ten {
+    color: var(--ten);
+  }
+  .word.toprak {
+    color: var(--toprak);
+    text-align: right;
+    margin-top: -0.08em;
+  }
+  .conj {
+    display: block;
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(30px, 4vw, 56px);
+    color: var(--ink-soft);
+    text-align: center;
+    margin: -0.05em 0;
+    line-height: 1;
+    letter-spacing: 0;
+  }
+
+  .hero-meta {
+    margin-top: clamp(40px, 6vw, 72px);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  @media (min-width: 820px) {
+    .hero-meta { grid-template-columns: 1.1fr 1fr; align-items: end; }
+  }
+  .hero-meta .lede {
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(24px, 2.6vw, 34px);
+    line-height: 1.25;
+    color: var(--ink);
+    max-width: 22ch;
+    margin: 0;
+    letter-spacing: -0.005em;
+  }
+  .hero-meta .desc {
+    font-family: var(--body);
+    font-size: 17px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    max-width: 40ch;
+    margin: 0;
+  }
+  .hero-meta .desc em { font-style: italic; color: var(--toprak); }
+
+  /* ---------- Plate / image block (full width within main) ---------- */
+  .plate-band {
+    margin: clamp(60px, 8vw, 120px) calc(var(--gutter) * -0.6) 0;
+    position: relative;
+  }
+  @media (max-width: 720px) { .plate-band { margin-left: 0; margin-right: 0; } }
+  .plate-band .pl-frame {
+    aspect-ratio: 16 / 9;
+    background: var(--paper-2);
+    overflow: hidden;
+    position: relative;
+  }
+  .plate-band .pl-frame img { width: 100%; height: 100%; object-fit: cover; filter: saturate(0.95) contrast(1.02); }
+  .plate-band .cap {
+    margin-top: 14px;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 20px;
+    align-items: baseline;
+    padding: 0 8px;
+  }
+  .plate-band .pl-num { font-family: var(--mono); font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--toprak); }
+  .plate-band .pl-text { font-family: var(--body); font-style: italic; font-size: 15px; color: var(--ink-soft); max-width: 60ch; }
+  .plate-band .pl-meta { font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--grey-1); }
+
+  /* ---------- Wall label (museum tag) ---------- */
+  .wall-label {
+    max-width: 520px;
+    margin: 0 auto;
+    text-align: center;
+    padding: clamp(40px, 5vw, 64px) 0;
+    position: relative;
+  }
+  .wall-label::before,
+  .wall-label::after {
+    content: "";
+    display: block;
+    height: 1px;
+    background: var(--ink);
+    margin: 0 auto;
+    width: 100%;
+  }
+  .wall-label::before { margin-bottom: 36px; }
+  .wall-label::after { margin-top: 36px; opacity: 0.4; }
+
+  .wall-label .place {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.42em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin-bottom: 32px;
+  }
+  .wall-label .artist {
+    font-family: var(--body);
+    font-size: 17px;
+    color: var(--ink);
+    margin-bottom: 14px;
+    letter-spacing: 0.01em;
+  }
+  .wall-label .artist .b { color: var(--grey-1); font-style: italic; font-family: var(--display); margin-left: 6px; font-size: 16px; }
+
+  .wall-label .title {
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(34px, 4.4vw, 52px);
+    line-height: 1.1;
+    color: var(--toprak);
+    margin: 8px 0 6px;
+    letter-spacing: -0.005em;
+  }
+  .wall-label .title-de {
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 18px;
+    color: var(--grey-1);
+    margin-bottom: 22px;
+  }
+  .wall-label .specs {
+    font-family: var(--body);
+    font-size: 16px;
+    color: var(--ink-soft);
+    line-height: 1.7;
+  }
+  .wall-label .specs .lbl {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--grey-1);
+    margin-right: 10px;
+  }
+  .wall-label .divider {
+    width: 16px; height: 1px; background: var(--rule);
+    margin: 18px auto;
+  }
+
+  /* ---------- Section head (used in analysis / gallery / etc) ---------- */
+  .head {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    margin-bottom: clamp(56px, 7vw, 100px);
+    align-items: end;
+  }
+  @media (min-width: 880px) {
+    .head { grid-template-columns: 1.1fr 1fr; gap: 60px; }
+  }
+  .head h2 {
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(48px, 6.5vw, 96px);
+    line-height: 0.96;
+    letter-spacing: -0.015em;
+    margin: 16px 0 0;
+    color: var(--ink);
+    max-width: 14ch;
+  }
+  .head h2 em.ten-c { color: var(--ten-d); font-style: italic; }
+  .head h2 em.toprak-c { color: var(--toprak); font-style: italic; }
+  .head .head-note {
+    font-family: var(--body);
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    max-width: 42ch;
+    justify-self: end;
+    padding-bottom: 8px;
+  }
+
+  /* ---------- Analyses ---------- */
+  .essays { display: grid; grid-template-columns: 1fr; gap: clamp(64px, 9vw, 140px); }
+  .essay {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    align-items: start;
+  }
+  @media (min-width: 900px) {
+    .essay { grid-template-columns: 1fr 1.6fr; gap: clamp(40px, 6vw, 100px); align-items: start; }
+  }
+  .essay .lhs {
+    position: sticky;
+    top: 32px;
+  }
+  .essay .num {
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(140px, 18vw, 260px);
+    line-height: 0.82;
+    margin: -0.12em 0 0;
+    letter-spacing: -0.03em;
+    display: block;
+  }
+  .essay[data-i="1"] .num { color: var(--ten); }
+  .essay[data-i="2"] .num { color: var(--toprak); }
+  .essay[data-i="3"] .num { color: var(--ink); }
+
+  .essay .tagline {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--grey-1);
+    margin-top: 18px;
+    border-top: 1px solid var(--rule);
+    padding-top: 14px;
+    max-width: 22ch;
+  }
+  .essay h3 {
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(28px, 3.4vw, 44px);
+    line-height: 1.1;
+    margin: 0 0 24px;
+    color: var(--ink);
+    letter-spacing: -0.005em;
+    max-width: 18ch;
+  }
+  .essay p {
+    font-family: var(--body);
+    font-size: 18px;
+    line-height: 1.65;
+    color: var(--ink-soft);
+    margin: 0 0 16px;
+    max-width: 44ch;
+  }
+  .essay p em { color: var(--toprak); font-style: italic; }
+  .essay p.lead::first-letter {
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: 3.4em;
+    line-height: 0.85;
+    float: left;
+    padding: 6px 12px 0 0;
+    color: var(--toprak);
+  }
+
+  /* ---------- Plate variants (editorial) ---------- */
+  .plate-spread {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  @media (min-width: 880px) {
+    .plate-spread { grid-template-columns: repeat(12, 1fr); gap: 60px; align-items: center; }
+    .ps-img.left  { grid-column: 1 / span 6; }
+    .ps-img.right { grid-column: 7 / span 6; }
+    .ps-text.left  { grid-column: 1 / span 6; }
+    .ps-text.right { grid-column: 7 / span 6; }
+  }
+  .ps-img .pl-frame {
+    aspect-ratio: 3 / 4;
+    background: var(--paper-2);
+    overflow: hidden;
+  }
+  .ps-img .pl-frame img { width: 100%; height: 100%; object-fit: cover; }
+  .ps-img.bw .pl-frame img { filter: grayscale(1) contrast(1.03); }
+
+  .ps-text .quote {
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 300;
+    font-size: clamp(26px, 3.3vw, 42px);
+    line-height: 1.2;
+    color: var(--ink);
+    margin: 0 0 22px;
+    max-width: 22ch;
+    letter-spacing: -0.005em;
+  }
+  .ps-text .quote em { color: var(--toprak); }
+  .ps-text .quote .ten-w { color: var(--ten-d); font-style: italic; }
+  .ps-text .body {
+    font-family: var(--body);
+    font-size: 16.5px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+    max-width: 38ch;
+  }
+  .ps-text .body p { margin: 0 0 12px; }
+  .ps-text .cap-row {
+    display: flex; gap: 20px;
+    border-top: 1px solid var(--rule);
+    margin-top: 28px;
+    padding-top: 14px;
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--grey-1);
+    flex-wrap: wrap;
+  }
+  .ps-text .cap-row .num { color: var(--toprak); }
+
+  /* ---------- Lexicon (Kavramlar) ---------- */
+  .lex { display: grid; grid-template-columns: 1fr; gap: 0; border-top: 1px solid var(--rule); }
+  .lex-row {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    align-items: baseline;
+    gap: 24px;
+    padding: clamp(20px, 2.4vw, 32px) 0;
+    border-bottom: 1px solid var(--rule);
+    cursor: default;
+    transition: background .35s ease;
+  }
+  @media (min-width: 760px) {
+    .lex-row { grid-template-columns: 64px minmax(220px, 28%) 1fr; }
+  }
+  .lex-row .n {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    color: var(--grey-1);
+    align-self: start;
+    padding-top: 18px;
+  }
+  .lex-row .term {
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 400;
+    font-size: clamp(40px, 6vw, 76px);
+    line-height: 1;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    transition: color .4s ease, transform .5s cubic-bezier(.2,.7,.2,1);
+    transform-origin: left center;
+  }
+  .lex-row .def {
+    font-family: var(--body);
+    font-size: 16.5px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    max-width: 50ch;
+    opacity: 0.55;
+    transition: opacity .4s ease, transform .5s cubic-bezier(.2,.7,.2,1);
+    transform: translateY(2px);
+  }
+  .lex-row .def .dash { color: var(--toprak); margin-right: 8px; }
+
+  .lex-row:hover { background: var(--paper-2); }
+  .lex-row:hover .def { opacity: 1; transform: translateY(0); }
+  .lex-row[data-color="ten"]:hover .term { color: var(--ten-d); transform: translateX(8px); }
+  .lex-row[data-color="toprak"]:hover .term { color: var(--toprak); transform: translateX(8px); }
+  .lex-row[data-color="ink"]:hover .term { color: var(--ink); transform: translateX(8px); }
+
+  /* ---------- Sources ---------- */
+  .biblio { max-width: 740px; }
+  .ref {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    gap: 20px;
+    padding: 18px 0;
+    border-top: 1px solid var(--rule-soft);
+    align-items: baseline;
+  }
+  .ref:last-child { border-bottom: 1px solid var(--rule-soft); }
+  .ref .n {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.18em;
+    color: var(--toprak);
+  }
+  .ref .t {
+    font-family: var(--body);
+    font-size: 16px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+  }
+  .ref .t em {
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 1.08em;
+    color: var(--ink);
+  }
+
+  /* ---------- Colophon ---------- */
+  .colophon {
+    margin-top: clamp(60px, 8vw, 120px);
+    padding: 48px var(--gutter) 80px;
+    border-top: 1px solid var(--ink);
+    background: var(--paper);
+    position: relative; z-index: 2;
+  }
+  .colo-inner {
+    max-width: var(--maxw);
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+  @media (min-width: 760px) {
+    .colo-inner { grid-template-columns: 1fr 1fr 1fr; gap: 60px; }
+  }
+  .colo-block .label {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--grey-1);
+    margin-bottom: 10px;
+  }
+  .colo-block .body {
+    font-family: var(--body);
+    font-size: 15.5px;
+    line-height: 1.6;
+    color: var(--ink-soft);
+  }
+  .colo-block .body em { font-style: italic; color: var(--ink); }
+  .colo-mark {
+    font-family: var(--display);
+    font-style: italic;
+    font-weight: 300;
+    font-size: 36px;
+    line-height: 1;
+    color: var(--toprak);
+  }
+  .colo-mark .ten-c { color: var(--ten-d); }
+
+  /* ---------- small helpers ---------- */
+  .rule { display: block; width: 100%; height: 1px; background: var(--rule); margin: 12px 0; }
+  .rule-thick { background: var(--ink); }
+
+  /* anchor offsets for sticky-like effect (none used) */
+  section[id] { scroll-margin-top: 40px; }
+</style>
+</head>
+<body>
+
+<div class="spine">Ten ve Toprak — Arşiv 02 / 2026</div>
+
+<div class="archive">
+  <div class="id"><strong>Sanat Notu</strong> No. 02 · Yerleştirme · MMXXVI</div>
+  <nav class="nav">
+    <a href="#kunye">Künye</a>
+    <a href="#analiz">Üç Okuma</a>
+    <a href="#plaka">Plakalar</a>
+    <a href="#sozluk">Sözlük</a>
+    <a href="#kaynak">Kaynaklar</a>
+  </nav>
+</div>
+
+<main>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" data-screen-label="01 Hero">
+    <div class="hero-top">
+      <span class="eyebrow"><span class="tick"></span>Mehtap Baydu — Bir Yerleştirme Üzerine</span>
+      <span class="num">
+</span>
+    </div>
+
+    <div class="hero-type">
+      <span class="word ten">Ten</span>
+      <span class="conj">ve</span>
+      <span class="word toprak">Toprak</span>
+    </div>
+
+    <div class="hero-meta">
+      <p class="lede">Bedenle ağacın aynı zemini paylaştığı bir karşılaşma notu.</p>
+      <p class="desc"><em>Bir Ağaç ile Deri Alıp Verme</em> (2025–2026), Mehtap Baydu’nun Arter, Galeri 1’de yer alan yerleştirmesi. Kurumuş bir ağaç dalından alınan kalıpla üretilmiş bronz form ile toz porselenden üretilmiş, çiçeğin taç yapraklarını andıran kırılgan beden fragmanları aynı zeminde yan yana yer alıyor.</p>
+    </div>
+
+    <div class="plate-band">
+      <div class="pl-frame">
+        <img src="images/installation-01.png" alt="Bir Ağaç ile Deri Alıp Verme — Arter, Galeri 1 yerleştirme görünümü." />
+      </div>
+      <div class="cap">
+        <span class="pl-num">Pl. №01</span>
+        <span class="pl-text">Galeri zemininde bronz form yatay olarak uzanırken, çevresine toz porselenden üretilmiş kırılgan beden fragmanları yerleştirilmiş; arka duvardaki görüntü, beden ile orman arasındaki ilişkiyi mekân içinde sürdürür.</span>
+        <span class="pl-meta">Arter / G1</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WALL LABEL ============ -->
+  <section id="kunye" data-screen-label="02 Kunye">
+    <div class="wall-label">
+      <div class="place">Arter &nbsp;·&nbsp; Galeri 1</div>
+      <div class="artist">Mehtap Baydu <span class="b">(d. 1976, Bingöl)</span></div>
+      <div class="title">Bir Ağaç ile Deri Alıp Verme</div>
+      <div class="title-de">Hautaustausch mit einem Baum</div>
+      <div class="specs">
+        <div><span class="lbl">Tarih</span>2025 – 2026</div>
+        <div><span class="lbl">Malzeme</span>Bronz ve toz porselen</div>
+        <div class="divider"></div>
+        <div><span class="lbl">Sergi</span><em style="font-style:italic;">Seni Sevmek Çok Zor!</em></div>
+        <div><span class="lbl">Küratör</span>Selen Ansen</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ANALYSIS ============ -->
+  <section id="analiz" data-screen-label="03 Analiz">
+    <div class="head">
+      <div>
+        <span class="eyebrow"><span class="tick"></span>Üç Okuma</span>
+        <h2>Kalıbın, malzemenin ve <em class="toprak-c">mekânın</em> çağrısı.</h2>
+      </div>
+      <p class="head-note">Yerleştirmeyi üç eksende okuyoruz: bedenin geride bıraktığı kalıp, karşı karşıya getirilen iki malzeme ve seyircinin etrafında dolaşmak zorunda kaldığı eşik mekân.</p>
+    </div>
+
+    <div class="essays">
+
+      <article class="essay" data-i="1">
+        <div class="lhs">
+          <span class="num">I.</span>
+          <div class="tagline">Kalıp ve Ten</div>
+        </div>
+        <div>
+          <h3>Bedenin geride bıraktığı bir boşluk.</h3>
+          <p class="lead">Baydu, kendi bedeninden alınan negatifleri toz porselenle dolduruyor. Bu parçalar doğrudan figüratif bir beden temsili olmaktan çok, bedenin yüzeyinden geriye kalan <em>izler</em> gibi çalışır.</p>
+          <p>İzleyici, bir bedeni değil, bir bedenin yokluğunu görür. Yerde dağılmış halde duran fragmanlar, kalıbın geleneksel işlevini — koruyucu bir kabuk olma halini — tersine çevirir; geride yalnızca temasın izi kalır.</p>
+        </div>
+      </article>
+
+      <article class="essay" data-i="2">
+        <div class="lhs">
+          <span class="num">II.</span>
+          <div class="tagline">Malzeme Karşıtlığı</div>
+        </div>
+        <div>
+          <h3>Bronz ile porselen arasında bir karşıtlık.</h3>
+          <p class="lead">Yerde uzanan bronz form, kurumuş bir ağaç dalından alınan kalıpla üretilmiştir; ağır, koyu ve süreklilik vaat eden bir madde. Çevresine yerleştirilen toz porselen fragmanlar ise ışığı geçiren, kırılgan ve geçici bir yüzey oluşturur.</p>
+          <p>İki malzemenin aynı zeminde bir araya gelmesi, doğanın sürekliliğiyle insan bedeninin geçiciliği arasında <em>bir aktarım</em> ilişkisi kurar.</p>
+        </div>
+      </article>
+
+      <article class="essay" data-i="3">
+        <div class="lhs">
+          <span class="num">III.</span>
+          <div class="tagline">Mekân ve Karşılaşma</div>
+        </div>
+        <div>
+          <h3>Eşikte duran bir seyirci.</h3>
+          <p class="lead">Arter, Galeri 1’in koyu duvarı ve gri zemini, yerleştirmeyi tek bir nesne olarak değil, bir alan kompozisyonu olarak okumayı mümkün kılar. Arka duvarda yer alan video bedeni orman içine yerleştirirken, zemindeki fragmanlar izleyiciyi aynı mekâna çağırır.</p>
+          <p>Eser tek bir bakış noktasına izin vermez. İzleyici parçaların arasında dolaşarak hangi tarafın doğa, hangisinin beden olduğuna ilişkin kendi okumasını oluşturur.</p>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ============ PLATE 02 (detail) ============ -->
+  <section id="plaka" data-screen-label="04 Plaka 02">
+    <div class="head">
+      <div>
+        <span class="eyebrow"><span class="tick"></span>Plakalar — Görsel Anlatı</span>
+        <h2>Sergi mekânından <em class="ten-c">iki</em> ve üretim sürecinden <em class="toprak-c">bir</em> görünüm.</h2>
+      </div>
+      <p class="head-note">Plakalar art arda yerleştirildi: ilki yerleştirmenin geniş açısı, ikincisi sergi mekânından farklı bir görünüm, üçüncüsü eserin üretim sürecinden bir kare.</p>
+    </div>
+
+    <div class="plate-spread" style="margin-bottom: clamp(80px, 10vw, 140px);">
+      <div class="ps-text left">
+        <p class="quote">Sergi mekânından bir <em>görünüm</em>: bronz form ile beden fragmanları aynı alanı paylaşıyor.</p>
+        <div class="body">
+          <p>Galerinin farklı bir açısından alınmış kare. Bronz form zeminde uzanırken çevresine ve mekânın değişen noktalarına toz porselen fragmanlar dağılmıştır.</p>
+          <p>Görüntü, yerleştirmenin farklı bakış noktalarından nasıl okunduğunu gösterir.</p>
+        </div>
+        <div class="cap-row">
+          <span class="num">Pl. №02</span>
+          <span>Sergi mekânı</span>
+          <span>Arter / G1</span>
+        </div>
+      </div>
+      <div class="ps-img right">
+        <div class="pl-frame">
+          <img src="images/installation-02.png" alt="Asılı porselen form, bronz dal ve dağılmış parçalar." />
+        </div>
+      </div>
+    </div>
+
+    <div class="plate-spread">
+      <div class="ps-img left bw">
+        <div class="pl-frame">
+          <img src="images/process-03.png" alt="Üretim sürecinden siyah-beyaz fotoğraf: ağaç gövdesine yerleştirilmiş porselen torso." />
+        </div>
+      </div>
+      <div class="ps-text right">
+        <p class="quote"><em>Bedenden ağaca, ağaçtan bedene</em> yönelen bir aktarım.</p>
+        <div class="body">
+          <p>Eserin üretim sürecinden bir kare. Çıplak ağaçların arasında, bir ağaç gövdesine yerleştirilmiş porselen bir beden fragmanı görünmektedir.</p>
+          <p>Yerleştirme galeride aldığı son hâlinden önce, üretim süreci doğal mekânla doğrudan bir temas üzerinden ilerlemiştir.</p>
+        </div>
+        <div class="cap-row">
+          <span class="num">Pl. №03</span>
+          <span>Üretim süreci / 2025–2026</span>
+          <span>Siyah-Beyaz</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ LEXICON ============ -->
+  <section id="sozluk" data-screen-label="05 Sozluk">
+    <div class="head">
+      <div>
+        <span class="eyebrow"><span class="tick"></span>Sözlük — Altı Kavram</span>
+        <h2>Eseri açan <em class="toprak-c">altı</em> kelime.</h2>
+      </div>
+      <p class="head-note">Aşağıdaki terimler, yerleştirmeyle birlikte düşünmek için hazırlanmış kısa tanımlardır. Üzerine gelin: her terim biraz daha açılır.</p>
+    </div>
+
+    <div class="lex">
+      <div class="lex-row" data-color="ten">
+        <span class="n">01</span>
+        <span class="term">Ten</span>
+        <span class="def"><span class="dash">—</span>Bedenin dış sınırı; burada toz porselenle yeniden üretilen, kırılgan ve geçici bir yüzey.</span>
+      </div>
+      <div class="lex-row" data-color="ink">
+        <span class="n">02</span>
+        <span class="term">Kalıp</span>
+        <span class="def"><span class="dash">—</span>Bedenden alınan negatif; mevcut olanın değil, geride kalan boşluğun belgesi.</span>
+      </div>
+      <div class="lex-row" data-color="toprak">
+        <span class="n">03</span>
+        <span class="term">Bronz</span>
+        <span class="def"><span class="dash">—</span>Kurumuş bir ağaç dalından alınan kalıpla üretilmiş ağır ve kalıcı form; doğal bir öğenin insan eliyle sabitlenmiş hâli.</span>
+      </div>
+      <div class="lex-row" data-color="ten">
+        <span class="n">04</span>
+        <span class="term">Porselen</span>
+        <span class="def"><span class="dash">—</span>Toz halinden katılaşan, ışığı tutan, dokunulduğunda dağılma riski taşıyan kırılgan madde.</span>
+      </div>
+      <div class="lex-row" data-color="toprak">
+        <span class="n">05</span>
+        <span class="term">Ağaç</span>
+        <span class="def"><span class="dash">—</span>Eserin ikinci öznesi; bedenle eşit bir konumda yerleştirilen doğal varlık.</span>
+      </div>
+      <div class="lex-row" data-color="ink">
+        <span class="n">06</span>
+        <span class="term">İz</span>
+        <span class="def"><span class="dash">—</span>İki yüzey arasındaki temasın geride bıraktığı kalıntı; eserin asıl ürettiği şey.</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SOURCES ============ -->
+  <section id="kaynak" data-screen-label="06 Kaynaklar">
+    <div class="head">
+      <div>
+        <span class="eyebrow"><span class="tick"></span>Kaynaklar</span>
+        <h2>Okumalar &amp; <em class="toprak-c">referanslar</em>.</h2>
+      </div>
+      <p class="head-note">Bu metin, aşağıdaki birincil ve ikincil kaynaklardan yararlanılarak hazırlanmıştır.</p>
+    </div>
+
+    <div class="biblio">
+      <div class="ref">
+        <span class="n">[01]</span>
+        <span class="t">Selen Ansen, <em>Seni Sevmek Çok Zor! Sergi Rehberi</em>, Arter, İstanbul, 2026.</span>
+      </div>
+      <div class="ref">
+        <span class="n">[02]</span>
+        <span class="t">Mehtap Baydu, <em>About</em>, sanatçının kişisel web sitesi.</span>
+      </div>
+      <div class="ref">
+        <span class="n">[03]</span>
+        <span class="t">Haus der Kulturen der Welt, <em>Mehtap Baydu</em> — sanatçı biyografisi.</span>
+      </div>
+      <div class="ref">
+        <span class="n">[04]</span>
+        <span class="t">Serfiraz Ergun, <em>T24</em> — sergi yazısı, 2026.</span>
+      </div>
+      <div class="ref">
+        <span class="n">[05]</span>
+        <span class="t">Görsel 1–2: T24 / Serfiraz Ergun.</span>
+      </div>
+      <div class="ref">
+        <span class="n">[06]</span>
+        <span class="t">Görsel 3: Arter, <em>Seni Sevmek Çok Zor! Sergi Rehberi</em>, 2026, s. 11.</span>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="colophon">
+  <div class="colo-inner">
+    <div class="colo-block">
+      <div class="label">Yayın</div>
+      <div class="body">
+        <span class="colo-mark"><span class="ten-c">Ten</span> ve Toprak</span><br/>
+        <em>Sanat Notu</em> No. 02 · 2026<br/>
+        Mehtap Baydu / Arter, Galeri 1
+      </div>
+    </div>
+    <div class="colo-block">
+      <div class="label">Mekân</div>
+      <div class="body">
+        Arter, İrmak Cad. 13<br/>
+        34435 Dolapdere, İstanbul<br/>
+        <em>Sergi: Seni Sevmek Çok Zor!</em>
+      </div>
+    </div>
+    <div class="colo-block">
+      <div class="label">Tipografi</div>
+      <div class="body">
+        Cormorant Garamond · EB Garamond<br/>
+        JetBrains Mono
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
